@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>{{ title }}</h1>
+    <p>{{ heading }}</p>
+
+    <hangman :wordList="wordList" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import Hangman from '@/views/Hangman.vue'
 
 export default {
   name: 'app',
-  components: {
-    HelloWorld,
+
+  data() {
+    return {
+      title: 'Hangman game',
+      heading: 'Guess the fruit',
+      wordList: ['grape', 'apple', 'pineaple', 'orange', 'banana', 'strawberry', 'mango']
+    }
   },
-};
+
+  components: {
+    'hangman': Hangman
+  }
+}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  body {
+    font-family: sans-serif;
+  }
 </style>
