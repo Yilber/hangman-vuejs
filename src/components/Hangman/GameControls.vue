@@ -12,6 +12,13 @@
 
 <script>
 export default {
+  props: {
+    isActive: {
+      type: Boolean,
+      default: true
+    }
+  },
+
   data() {
     return {
       keyboard: ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'],
@@ -21,8 +28,13 @@ export default {
 
   methods: {
     keyboardInput(key) {
-      this.letter = ''
-      this.$emit('input', key)
+      this.letter = '';
+
+      if(!key.match(/^[a-zA-Z]+$/)){
+        alert('Invalid input.\nOnly letters please.')
+      } else if(this.isActive){
+        this.$emit('input', key.toLowerCase())
+      }
     }
   }
 }
@@ -38,11 +50,14 @@ export default {
     padding-left: 0;
 
     li {
+      display: block;
       margin: 2px 0;
 
       button {
-        border: 1px solid #000;
+        background-color: #000;
+        border: none;
         border-radius: 3px;
+        color: #fff;
         font-weight: bold;
         margin: 2px 3px;
         padding: 5px 0;
@@ -56,7 +71,7 @@ export default {
       }
 
       &:nth-child(3) {
-        padding-left: 63px;
+        padding-left: 66px;
       }
     }
   }

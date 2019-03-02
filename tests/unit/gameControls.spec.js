@@ -4,7 +4,7 @@ import GameControls from '@/components/Hangman/GameControls.vue'
 describe('GameControls.vue', () => {
   console.log = jest.fn();
 
-  test('emits a letter when a button clicked', () => {
+  test('emits input when a button clicked', () => {
     let wrapper = shallowMount(GameControls);
     let buttons = wrapper.findAll('button');
     let keyboardLength = wrapper.vm.keyboard.join("").split("").length;
@@ -14,7 +14,7 @@ describe('GameControls.vue', () => {
     expect(buttons).toHaveLength(keyboardLength);
   });
 
-  test('emits key typed', () => {
+  test('emits input when a letter is typed', () => {
     let wrapper = shallowMount(GameControls);
     let input = wrapper.find('input');
 

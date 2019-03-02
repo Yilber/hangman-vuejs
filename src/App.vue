@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="center">
     <h1>{{ title }}</h1>
     <p>{{ heading }}</p>
 
@@ -13,11 +13,11 @@ import Hangman from '@/views/Hangman.vue'
 export default {
   name: 'app',
 
-  data() {
+  data(){
     return {
       title: 'Hangman game',
-      heading: 'Guess the fruit',
-      wordList: ['grape', 'apple', 'pineaple', 'orange', 'banana', 'strawberry', 'mango']
+      heading: 'Guess the word',
+      wordList: ['purple', 'green', 'orange', 'red', 'white', 'blue', 'yellow', 'black']
     }
   },
 
@@ -30,5 +30,10 @@ export default {
 <style lang="scss">
   body {
     font-family: sans-serif;
+  }
+
+  .center {
+    display: table;
+    margin: auto;
   }
 </style>
