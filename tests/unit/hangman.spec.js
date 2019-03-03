@@ -90,7 +90,7 @@ describe('Hangman.vue', () => {
 
     let attemptsLeft = wrapper.vm.attemptsLeft - 1;
 
-    wrapper.vm.checkWord('t');
+    wrapper.vm.checkInput('t');
     expect(wrapper.vm.attemptsLeft).toBe(attemptsLeft);
   });
 });
