@@ -18,30 +18,32 @@ export default {
     lives: {
       type: Number,
       default: 3,
-      validator(lives){
-        return lives >= 1
+      validator(value) {
+        return Number.isInteger(value) && value > 0
       }
     },
 
     attempts: {
       type: Number,
       default: 6,
-      validator(attempts){
-        return attempts > 1
+      validator(value) {
+        return Number.isInteger(value) && value > 1
       }
     },
 
     wordList: {
       type: Array,
-      default: ['grape', 'apple', 'pineaple', 'orange', 'banana', 'strawberry', 'mango'],
-      validator(wordList){
-        return wordList.length > 0
+      default: function() {
+        return ['grape', 'apple', 'pineaple', 'orange', 'banana', 'strawberry', 'mango']
+      },
+      validator(array) {
+        return array.length > 0 && array.every((e) => typeof e === 'string')
       }
     }
   },
 
-  beforeMount(){
-    this.reset()
+  created(){
+    this.reset();
   },
 
   data(){
@@ -50,19 +52,36 @@ export default {
       encodedWord: '',
       missedLetters: [],
       hiddenLetters: [],
-      attemptsLeft: 0,
+      attemptsLeft: this.attempts,
       livesLeft: this.lives,
       style: '',
       isRunning: true
     }
   },
 
+  computed: {
+    isGameOver(){
+      console.log('computed: isGameOver', this.word)
+      return this.attemptsLeft === 0
+    }
+  },
+
   watch: {
-    attemptsLeft(){
-      if(this.attemptsLeft === 0){
+    isGameOver(value){
+      console.log('watch: isGameOver', this.word)
+
+      if(value){
         this.won(false);
       }
     },
+
+    // attemptsLeft(){
+    //   console.log('watch: attemptsLeft', this.word)
+
+    //   if(this.attemptsLeft === 0){
+    //     this.won(false);
+    //   }
+    // },
 
     livesLeft(){
       if(this.livesLeft === 0){

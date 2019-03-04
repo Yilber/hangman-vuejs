@@ -16,8 +16,10 @@ export default {
   data(){
     return {
       title: 'Hangman game',
-      heading: 'Guess the word',
-      wordList: ['purple', 'green', 'orange', 'red', 'white', 'blue', 'yellow', 'black']
+      heading: 'Guess the color',
+      wordList: ['purple', 'green', 'orange', 'red', 'white', 'blue', 'yellow', 'black', 'ivory',
+        'beige', 'pink', 'magenta', 'violet', 'navy', 'brown', 'gray', 'turquoise'
+      ]
     }
   },
 
