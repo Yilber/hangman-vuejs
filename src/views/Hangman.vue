@@ -52,7 +52,6 @@ export default {
       encodedWord: '',
       missedLetters: [],
       hiddenLetters: [],
-      attemptsLeft: this.attempts,
       livesLeft: this.lives,
       style: '',
       isRunning: true
@@ -60,29 +59,18 @@ export default {
   },
 
   computed: {
-    isGameOver(){
-      console.log('computed: isGameOver', this.word)
-      return this.attemptsLeft === 0
-    }
+    attemptsLeft(){
+      const attemptsLeft = this.attempts - this.missedLetters.length;
+
+      if(attemptsLeft === 0){
+        this.won(false);
+      }
+
+      return attemptsLeft;
+    },
   },
 
   watch: {
-    isGameOver(value){
-      console.log('watch: isGameOver', this.word)
-
-      if(value){
-        this.won(false);
-      }
-    },
-
-    // attemptsLeft(){
-    //   console.log('watch: attemptsLeft', this.word)
-
-    //   if(this.attemptsLeft === 0){
-    //     this.won(false);
-    //   }
-    // },
-
     livesLeft(){
       if(this.livesLeft === 0){
         this.livesLeft = this.lives;
@@ -91,7 +79,7 @@ export default {
     },
 
     hiddenLetters: function(){
-      let length = this.word.length;
+      const length = this.word.length;
       let encodedWord = this.encodedWord.split('');
 
       this.hiddenLetters.forEach((letter) => {
@@ -112,21 +100,22 @@ export default {
 
   methods: {
     reset(){
-      let random = Math.floor(Math.random() * this.wordList.length);
+      const random = Math.floor(Math.random() * this.wordList.length);
 
       this.word = this.wordList[random].toLowerCase();
       this.encodedWord = this.word.split('').fill('_', 0, this.word.length).join('');
-      this.missedLetters = [];
-      this.hiddenLetters = [];
-      this.attemptsLeft = this.attempts;
+
+      // Assigning a new array triggers the computed property, setting the length to 0 does not.
+      this.missedLetters.length = 0;
+      this.hiddenLetters.length = 0;
     },
 
     checkInput(key){
-      let wasTyped = new Set([...this.hiddenLetters, ...this.missedLetters]).has(key);
+      const wasTyped = new Set([...this.hiddenLetters, ...this.missedLetters]).has(key);
 
       if(wasTyped) return;
 
-      let isFound = this.word.search(key) >= 0? true: false;
+      const isFound = this.word.search(key) >= 0? true: false;
 
       if (isFound) {
         this.hiddenLetters.push(key);
@@ -134,13 +123,12 @@ export default {
       } else {
         this.missedLetters.push(key);
         this.missedLetters = [...new Set(this.missedLetters)];
-        this.attemptsLeft--;
       }
     },
 
     // this method needs a better name
     won(isWinner){
-      let self = this;
+      const self = this;
       this.style = isWinner ? 'won':'lost';
       this.isRunning = false;
 
