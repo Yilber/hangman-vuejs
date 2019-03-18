@@ -62,7 +62,7 @@ export default {
     attemptsLeft(){
       const attemptsLeft = this.attempts - this.missedLetters.length;
 
-      if(attemptsLeft === 0){
+      if(attemptsLeft === 0 && this.isRunning){
         this.won(false);
       }
 
